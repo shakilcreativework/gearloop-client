@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import ThemeProvider from "@/components/theme/ThemeProvider";
+import PaddleProvider from "@/components/booking/PaddleProvider";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -34,9 +35,11 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col" suppressHydrationWarning>
         <ThemeProvider>
-          <Navbar />
-          <main className="flex-1">{children}</main>
-          <Footer />
+          <PaddleProvider>
+            <Navbar />
+            <main className="flex-1">{children}</main>
+            <Footer />
+          </PaddleProvider>
         </ThemeProvider>
       </body>
     </html>

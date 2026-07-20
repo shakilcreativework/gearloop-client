@@ -110,7 +110,8 @@ export async function getListings(
 }
 
 export async function getFeaturedListings(): Promise<ListingDoc[]> {
-  return request<ListingDoc[]>("/api/listings/featured");
+  const raw = await request<{ listings: ListingDoc[] }>("/api/listings/featured");
+  return raw.listings;
 }
 
 export async function getListingById(id: string): Promise<ListingWithRelated> {
@@ -118,7 +119,10 @@ export async function getListingById(id: string): Promise<ListingWithRelated> {
 }
 
 export async function getOwnerListings(ownerId: string): Promise<ListingDoc[]> {
-  return request<ListingDoc[]>(`/api/owner/listings/${encodeURIComponent(ownerId)}`);
+  const raw = await request<{ listings: ListingDoc[] }>(
+    `/api/owner/listings/${encodeURIComponent(ownerId)}`,
+  );
+  return raw.listings;
 }
 
 export async function createListing(
@@ -161,34 +165,35 @@ export async function createBooking(
     renterId: string;
     startDate: string;
     endDate: string;
-    totalDays: number;
-    totalPrice: number;
   },
   token: string,
 ): Promise<BookingDoc> {
-  return request<BookingDoc>("/api/bookings", {
+  const raw = await request<{ booking: BookingDoc }>("/api/bookings", {
     method: "POST",
     headers: { Authorization: `Bearer ${token}` },
     body: JSON.stringify(data),
   });
+  return raw.booking;
 }
 
 export async function getRenterBookings(
   renterId: string,
   token: string,
 ): Promise<BookingDoc[]> {
-  return request<BookingDoc[]>(
+  const raw = await request<{ bookings: BookingDoc[] }>(
     `/api/bookings/${encodeURIComponent(renterId)}`,
     { headers: { Authorization: `Bearer ${token}` } },
   );
+  return raw.bookings;
 }
 
 export async function getListingAvailability(
   listingId: string,
 ): Promise<{ startDate: string; endDate: string }[]> {
-  return request<{ startDate: string; endDate: string }[]>(
+  const raw = await request<{ bookedDates: { startDate: string; endDate: string }[] }>(
     `/api/listings/${encodeURIComponent(listingId)}/availability`,
   );
+  return raw.bookedDates;
 }
 
 // ---------------------------------------------------------------------------
@@ -196,9 +201,10 @@ export async function getListingAvailability(
 // ---------------------------------------------------------------------------
 
 export async function getListingReviews(listingId: string): Promise<ReviewDoc[]> {
-  return request<ReviewDoc[]>(
+  const raw = await request<{ reviews: ReviewDoc[] }>(
     `/api/reviews/${encodeURIComponent(listingId)}`,
   );
+  return raw.reviews;
 }
 
 export async function createReview(
@@ -222,5 +228,6 @@ export async function createReview(
 // ---------------------------------------------------------------------------
 
 export async function getUsers(): Promise<UserDoc[]> {
-  return request<UserDoc[]>("/api/users");
+  const raw = await request<{ users: UserDoc[] }>("/api/users");
+  return raw.users;
 }
