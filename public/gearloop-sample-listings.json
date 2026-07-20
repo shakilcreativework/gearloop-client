@@ -1,0 +1,78 @@
+{
+  "listings": [
+    {
+      "title": "Osprey Atmos AG 65 Backpack",
+      "shortDescription": "65L backpacking pack with Anti-Gravity suspension for long-distance comfort.",
+      "fullDescription": "Barely used Osprey Atmos AG 65 in great condition. The Anti-Gravity suspension system keeps this pack breathable and comfortable even on multi-day trips. Includes rain cover and hip belt pockets. Perfect for thru-hikes or weekend backpacking trips.",
+      "category": "Camping",
+      "condition": "Excellent",
+      "pricePerDay": 18,
+      "location": "Boulder, CO",
+      "imageUrls": [
+        "https://images.unsplash.com/photo-1622260614153-03223fb72052",
+        "https://images.unsplash.com/photo-1533240332313-0db49b459ad6"
+      ]
+    },
+    {
+      "title": "Canon EOS R6 Mark II Camera",
+      "shortDescription": "Full-frame mirrorless camera with 24-70mm lens, great for landscapes and action.",
+      "fullDescription": "Canon EOS R6 Mark II body plus RF 24-70mm f/2.8 lens. Excellent low-light performance and fast autofocus, ideal for wildlife or adventure photography. Comes with two batteries, charger, and a 64GB SD card. Well maintained, no sensor dust.",
+      "category": "Photography",
+      "condition": "Excellent",
+      "pricePerDay": 60,
+      "location": "Portland, OR",
+      "imageUrls": [
+        "https://images.unsplash.com/photo-1516035069371-29a1b244cc32",
+        "https://images.unsplash.com/photo-1502920917128-1aa500764cbd"
+      ]
+    },
+    {
+      "title": "Burton Custom Snowboard 158cm",
+      "shortDescription": "All-mountain snowboard, 158cm, great for intermediate to advanced riders.",
+      "fullDescription": "Burton Custom, one of the most versatile all-mountain boards on the market. 158cm length suits riders 5'8\"-6'2\". Recently waxed and tuned, minor base scratches from normal use but no core damage. Bindings not included.",
+      "category": "Winter Sports",
+      "condition": "Good",
+      "pricePerDay": 30,
+      "location": "Park City, UT",
+      "imageUrls": [
+        "https://images.unsplash.com/photo-1522056615691-da7b8106c665"
+      ]
+    },
+    {
+      "title": "Trek Fuel EX 8 Mountain Bike",
+      "shortDescription": "Full-suspension trail bike, size Large, ready for singletrack.",
+      "fullDescription": "Trek Fuel EX 8, 29-inch wheels, 130mm front / 130mm rear travel. Great for technical trails and all-day rides. Recently serviced with fresh brake pads and a tuned drivetrain. Frame size Large, fits riders 5'10\"-6'2\".",
+      "category": "Cycling",
+      "condition": "Good",
+      "pricePerDay": 45,
+      "location": "Asheville, NC",
+      "imageUrls": [
+        "https://images.unsplash.com/photo-1553978297-833d09932d31"
+      ]
+    },
+    {
+      "title": "Black Diamond Climbing Harness Set",
+      "shortDescription": "Complete harness, helmet, and belay device set for two climbers.",
+      "fullDescription": "Includes two Black Diamond Momentum harnesses (sizes M and L), one Half Dome helmet, and an ATC-Guide belay device with locking carabiner. Everything you need for a day at the crag. Inspected and in good working condition.",
+      "category": "Climbing",
+      "condition": "Good",
+      "pricePerDay": 15,
+      "location": "Bishop, CA",
+      "imageUrls": [
+        "https://images.unsplash.com/photo-1522163182402-834f871fd851"
+      ]
+    },
+    {
+      "title": "Pelican Sentinel 100X Sit-On-Top Kayak",
+      "shortDescription": "Stable and durable sit-on-top kayak, perfect for lakes and calm rivers.",
+      "fullDescription": "Pelican Sentinel 100X, 10 feet long, great stability for beginners and casual paddlers. Includes paddle and a basic PFD. Minor scuffs on the hull from normal use, no cracks or repairs.",
+      "category": "Water Sports",
+      "condition": "Good",
+      "pricePerDay": 45,
+      "location": "Portland, OR",
+      "imageUrls": [
+        "https://images.unsplash.com/photo-1544551763-46a013bb70d5"
+      ]
+    }
+  ]
+}

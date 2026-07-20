@@ -13,7 +13,7 @@ const PUBLIC_LINKS = [
 ] as const;
 
 const AUTH_LINKS = [
-  { href: "/listings/add", label: "My Listings" },
+  { href: "/listings/manage", label: "My Listings" },
   { href: "/bookings", label: "My Bookings" },
 ] as const;
 
