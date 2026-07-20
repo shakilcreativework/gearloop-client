@@ -31,7 +31,7 @@ function datesOverlap(
 }
 
 export default function BookingWidget({ listing }: BookingWidgetProps) {
-  const { user } = useCurrentUser();
+  const { user, sessionToken } = useCurrentUser();
   const { paddle, ready: paddleReady } = usePaddle();
 
   const [startDate, setStartDate] = useState("");
@@ -134,13 +134,7 @@ export default function BookingWidget({ listing }: BookingWidgetProps) {
 
     try {
       // Get the session token for auth
-      const sessionRes = await fetch("/api/auth/get-session", {
-        credentials: "include",
-      });
-      const sessionData = await sessionRes.json();
-      const token = sessionData?.session?.token;
-
-      if (!token) {
+      if (!sessionToken) {
         throw new Error("No active session. Please log in again.");
       }
 
@@ -152,7 +146,7 @@ export default function BookingWidget({ listing }: BookingWidgetProps) {
           startDate,
           endDate,
         },
-        token,
+        sessionToken,
       );
 
       setBookingId(booking._id);

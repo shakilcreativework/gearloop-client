@@ -65,6 +65,24 @@ export interface ReviewDoc {
   createdAt: string;
 }
 
+export type UserRole = "renter" | "owner" | "admin";
+
+/**
+ * Extended user type that includes the `role` field from Better Auth's
+ * `additionalFields` config. Better Auth's built-in User type does not
+ * include custom fields, so we define it here and use it in useCurrentUser.
+ */
+export interface AuthUser {
+  id: string;
+  name: string;
+  email: string;
+  image?: string | null;
+  role: UserRole;
+  createdAt: Date;
+  updatedAt: Date;
+  emailVerified: boolean;
+}
+
 export interface UserDoc {
   _id: string;
   name: string;

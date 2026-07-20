@@ -5,6 +5,16 @@ import { betterAuthDb, betterAuthClient } from "@/lib/mongodb-client";
 export const auth = betterAuth({
   database: mongodbAdapter(betterAuthDb, { client: betterAuthClient }),
 
+  user: {
+    additionalFields: {
+      role: {
+        type: "string",
+        defaultValue: "renter",
+        input: false,
+      },
+    },
+  },
+
   emailAndPassword: {
     enabled: true,
   },

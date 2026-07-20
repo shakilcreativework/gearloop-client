@@ -18,11 +18,17 @@ const AUTH_LINKS = [
   { href: "/bookings", label: "My Bookings" },
 ] as const;
 
+const ADMIN_LINKS = [{ href: "/admin", label: "Admin Dashboard" }] as const;
+
 export default function Navbar() {
   const { user, isPending } = useCurrentUser();
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  const links = user ? [...PUBLIC_LINKS, ...AUTH_LINKS] : PUBLIC_LINKS;
+  const links = user
+    ? user.role === "admin"
+      ? [...PUBLIC_LINKS, ...AUTH_LINKS, ...ADMIN_LINKS]
+      : [...PUBLIC_LINKS, ...AUTH_LINKS]
+    : PUBLIC_LINKS;
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-card/80 backdrop-blur-md">
@@ -145,7 +151,11 @@ export default function Navbar() {
               <div className="h-9 w-full animate-pulse rounded-lg bg-border" />
             ) : user ? (
               <>
-                <div className="flex items-center gap-2 px-3">
+                <Link
+                  href="/profile"
+                  onClick={() => setMobileOpen(false)}
+                  className="flex items-center gap-2 rounded-lg px-3 py-2 transition-colors hover:bg-surface"
+                >
                   {user.image ? (
                     <Image
                       src={user.image}
@@ -160,7 +170,7 @@ export default function Navbar() {
                     </span>
                   )}
                   <span className="text-sm font-medium text-foreground">{user.name}</span>
-                </div>
+                </Link>
                 <button
                   type="button"
                   onClick={() => {

@@ -104,7 +104,7 @@ function BookingCard({ booking }: { booking: BookingWithListing }) {
 }
 
 function BookingsContent() {
-  const { user } = useCurrentUser();
+  const { user, sessionToken } = useCurrentUser();
   const [bookings, setBookings] = useState<BookingWithListing[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -119,17 +119,11 @@ function BookingsContent() {
         setLoading(true);
         setError(null);
 
-        const session = await fetch("/api/auth/get-session", {
-          credentials: "include",
-        });
-        const sessionData = await session.json();
-        const token = sessionData?.session?.token;
-
-        if (!token) {
-          throw new Error("No session token found");
+        if (!sessionToken) {
+          throw new Error("No active session. Please log in again.");
         }
 
-        const data = await getRenterBookings(user!.id, token);
+        const data = await getRenterBookings(user!.id, sessionToken);
 
         if (cancelled) return;
 
@@ -162,7 +156,7 @@ function BookingsContent() {
     return () => {
       cancelled = true;
     };
-  }, [user]);
+  }, [user, sessionToken]);
 
   if (loading) {
     return (

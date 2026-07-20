@@ -231,3 +231,89 @@ export async function getUsers(): Promise<UserDoc[]> {
   const raw = await request<{ users: UserDoc[] }>("/api/users");
   return raw.users;
 }
+
+// ---------------------------------------------------------------------------
+// Admin
+// ---------------------------------------------------------------------------
+
+export interface AdminUserSummary {
+  _id: string;
+  name: string;
+  email: string;
+  createdAt: string;
+  listingCount: number;
+  bookingCount: number;
+}
+
+export interface AdminStats {
+  totalUsers: number;
+  totalListings: number;
+  totalBookings: number;
+  totalRevenue: number;
+}
+
+export async function getAdminUsers(
+  token: string,
+): Promise<AdminUserSummary[]> {
+  const raw = await request<{ users: AdminUserSummary[] }>(
+    "/api/admin/users",
+    { headers: { Authorization: `Bearer ${token}` } },
+  );
+  return raw.users;
+}
+
+export async function getAdminStats(token: string): Promise<AdminStats> {
+  const raw = await request<{ stats: AdminStats }>(
+    "/api/admin/stats",
+    { headers: { Authorization: `Bearer ${token}` } },
+  );
+  return raw.stats;
+}
+
+export async function getAdminListings(token: string): Promise<ListingDoc[]> {
+  const raw = await request<{ listings: ListingDoc[] }>(
+    "/api/admin/listings",
+    { headers: { Authorization: `Bearer ${token}` } },
+  );
+  return raw.listings;
+}
+
+export interface AdminReviewSummary {
+  _id: string;
+  listingId: string;
+  listingTitle: string;
+  reviewerId: string;
+  rating: number;
+  comment: string;
+  createdAt: string;
+}
+
+export async function getAdminReviews(
+  token: string,
+): Promise<AdminReviewSummary[]> {
+  const raw = await request<{ reviews: AdminReviewSummary[] }>(
+    "/api/admin/reviews",
+    { headers: { Authorization: `Bearer ${token}` } },
+  );
+  return raw.reviews;
+}
+
+export async function adminDeleteListing(
+  id: string,
+  token: string,
+): Promise<void> {
+  await request(`/api/admin/listings/${encodeURIComponent(id)}`, {
+    method: "DELETE",
+    headers: { Authorization: `Bearer ${token}` },
+  });
+}
+
+export async function adminDeleteReview(
+  id: string,
+  token: string,
+): Promise<void> {
+  await request(`/api/admin/reviews/${encodeURIComponent(id)}`, {
+    method: "DELETE",
+    headers: { Authorization: `Bearer ${token}` },
+  });
+}

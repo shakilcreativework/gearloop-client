@@ -15,7 +15,7 @@ import EditListingModal from "@/components/listings/EditListingModal";
 import type { ListingDoc } from "@/types";
 
 function ManageListingsContent() {
-  const { user } = useCurrentUser();
+  const { user, sessionToken } = useCurrentUser();
   const [listings, setListings] = useState<ListingDoc[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -51,14 +51,9 @@ function ManageListingsContent() {
 
     try {
       setDeleting(true);
-      const sessionRes = await fetch("/api/auth/get-session", {
-        credentials: "include",
-      });
-      const sessionData = await sessionRes.json();
-      const token = sessionData?.session?.token;
-      if (!token) throw new Error("No session token found");
+      if (!sessionToken) throw new Error("No active session. Please log in again.");
 
-      await deleteListing(deleteTarget._id, token);
+      await deleteListing(deleteTarget._id, sessionToken);
       setListings((prev) =>
         prev.filter((l) => l._id !== deleteTarget._id),
       );
@@ -77,14 +72,9 @@ function ManageListingsContent() {
 
     try {
       setSaving(true);
-      const sessionRes = await fetch("/api/auth/get-session", {
-        credentials: "include",
-      });
-      const sessionData = await sessionRes.json();
-      const token = sessionData?.session?.token;
-      if (!token) throw new Error("No session token found");
+      if (!sessionToken) throw new Error("No active session. Please log in again.");
 
-      const result = await updateListing(editTarget._id, updates, token);
+      const result = await updateListing(editTarget._id, updates, sessionToken);
       setListings((prev) =>
         prev.map((l) => (l._id === editTarget._id ? result : l)),
       );

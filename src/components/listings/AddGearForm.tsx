@@ -34,7 +34,7 @@ interface FormErrors {
 }
 
 export default function AddGearForm() {
-  const { user } = useCurrentUser();
+  const { user, sessionToken } = useCurrentUser();
   const router = useRouter();
 
   const [title, setTitle] = useState("");
@@ -125,12 +125,7 @@ export default function AddGearForm() {
     try {
       setSubmitting(true);
 
-      const sessionRes = await fetch("/api/auth/get-session", {
-        credentials: "include",
-      });
-      const sessionData = await sessionRes.json();
-      const token = sessionData?.session?.token;
-      if (!token) throw new Error("No session token found");
+      if (!sessionToken) throw new Error("No active session. Please log in again.");
 
       const images = imageUrls
         .split("\n")
@@ -152,7 +147,7 @@ export default function AddGearForm() {
           available: true,
           tags,
         },
-        token,
+        sessionToken,
       );
 
       setSubmitSuccess(true);
