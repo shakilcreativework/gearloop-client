@@ -4,7 +4,6 @@ import type {
   ReviewDoc,
   UserDoc,
   ListingCategory,
-  ListingCondition,
 } from "@/types";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL;
@@ -34,11 +33,18 @@ export interface ListingsQuery {
 }
 
 export interface PaginatedResponse<T> {
-  data: T[];
-  total: number;
-  page: number;
-  limit: number;
-  totalPages: number;
+  listings: T[];
+  pagination: {
+    page: number;
+    limit: number;
+    total: number;
+    totalPages: number;
+  };
+}
+
+export interface ListingWithRelated {
+  listing: ListingDoc;
+  related: ListingDoc[];
 }
 
 export interface ApiResponseError {
@@ -94,15 +100,21 @@ export async function getListings(
   if (query.limit !== undefined) params.set("limit", String(query.limit));
 
   const qs = params.toString();
-  return request<PaginatedResponse<ListingDoc>>(`/api/listings${qs ? `?${qs}` : ""}`);
+  const raw = await request<{ listings: ListingDoc[]; pagination: PaginatedResponse<ListingDoc>["pagination"] }>(
+    `/api/listings${qs ? `?${qs}` : ""}`,
+  );
+  return {
+    listings: raw.listings,
+    pagination: raw.pagination,
+  };
 }
 
 export async function getFeaturedListings(): Promise<ListingDoc[]> {
   return request<ListingDoc[]>("/api/listings/featured");
 }
 
-export async function getListingById(id: string): Promise<ListingDoc> {
-  return request<ListingDoc>(`/api/listings/${encodeURIComponent(id)}`);
+export async function getListingById(id: string): Promise<ListingWithRelated> {
+  return request<ListingWithRelated>(`/api/listings/${encodeURIComponent(id)}`);
 }
 
 export async function getOwnerListings(ownerId: string): Promise<ListingDoc[]> {
