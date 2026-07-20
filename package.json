@@ -1,0 +1,40 @@
+{
+  "name": "client",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "@ai-sdk/groq": "^4.0.12",
+    "@better-auth/mongo-adapter": "^1.6.23",
+    "@heroui/react": "^3.2.2",
+    "@heroui/styles": "^3.2.2",
+    "@paddle/paddle-js": "^1.6.4",
+    "@paddle/paddle-node-sdk": "^3.8.0",
+    "ai": "^7.0.31",
+    "better-auth": "^1.6.23",
+    "mongodb": "^7.5.0",
+    "motion": "^12.42.2",
+    "next": "16.2.10",
+    "next-themes": "^0.4.6",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "recharts": "^3.9.2",
+    "swiper": "^14.0.5",
+    "tailwind-variants": "^3.2.2"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.2.10",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^5"
+  }
+}
