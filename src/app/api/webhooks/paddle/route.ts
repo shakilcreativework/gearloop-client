@@ -25,8 +25,12 @@ function verifyPaddleSignature(
   const parts = signatureHeader.split(";");
   const sigMap: Record<string, string> = {};
   for (const part of parts) {
-    const [k, v] = part.split("=");
-    if (k && v) sigMap[k.trim()] = v.trim();
+    const eqIdx = part.indexOf("=");
+    if (eqIdx > 0) {
+      const k = part.slice(0, eqIdx);
+      const v = part.slice(eqIdx + 1);
+      sigMap[k.trim()] = v.trim();
+    }
   }
 
   const ts = sigMap["ts"];
