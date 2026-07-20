@@ -6,6 +6,7 @@ import TrustSafety from "@/components/home/TrustSafety";
 import Testimonials from "@/components/home/Testimonials";
 import StatsCounters from "@/components/home/StatsCounters";
 import NewsletterSignup from "@/components/home/NewsletterSignup";
+import HomeRecommendations from "@/components/ai/HomeRecommendations";
 
 export default function Home() {
   return (
@@ -17,6 +18,7 @@ export default function Home() {
       <TrustSafety />
       <Testimonials />
       <StatsCounters />
+      <HomeRecommendations />
       <NewsletterSignup />
     </>
   );

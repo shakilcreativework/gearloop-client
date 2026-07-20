@@ -1,11 +1,17 @@
 "use client";
 
-import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
+import { useTheme } from "@/components/theme/ThemeProvider";
 
 export default function ThemeToggle() {
-  const { theme, setTheme, resolvedTheme } = useTheme();
+  const { resolvedTheme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
 
-  if (theme === undefined) {
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
     return (
       <div className="h-9 w-9 animate-pulse rounded-lg bg-border" aria-hidden="true" />
     );

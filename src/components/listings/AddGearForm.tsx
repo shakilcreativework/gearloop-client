@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
 import { createListing } from "@/lib/api";
+import ContentGeneratorPanel from "@/components/ai/ContentGeneratorPanel";
 import type { ListingCategory, ListingCondition } from "@/types";
 
 const CATEGORIES: { value: ListingCategory; label: string }[] = [
@@ -44,6 +45,8 @@ export default function AddGearForm() {
   const [location, setLocation] = useState("");
   const [condition, setCondition] = useState<ListingCondition>("good");
   const [imageUrls, setImageUrls] = useState("");
+  const [tags, setTags] = useState<string[]>([]);
+  const [tagInput, setTagInput] = useState("");
 
   const [errors, setErrors] = useState<FormErrors>({});
   const [submitting, setSubmitting] = useState(false);
@@ -87,6 +90,25 @@ export default function AddGearForm() {
     return e;
   }
 
+  function handleAIGenerate(description: string, suggestedTags: string[]) {
+    setFullDescription(description);
+    if (suggestedTags.length > 0) {
+      setTags(suggestedTags);
+    }
+  }
+
+  function handleAddTag() {
+    const t = tagInput.trim();
+    if (t && !tags.includes(t)) {
+      setTags([...tags, t]);
+    }
+    setTagInput("");
+  }
+
+  function handleRemoveTag(tag: string) {
+    setTags(tags.filter((t) => t !== tag));
+  }
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setSubmitError(null);
@@ -128,7 +150,7 @@ export default function AddGearForm() {
           images,
           condition,
           available: true,
-          tags: [],
+          tags,
         },
         token,
       );
@@ -259,6 +281,9 @@ export default function AddGearForm() {
         </div>
       </div>
 
+      {/* AI Content Generator */}
+      <ContentGeneratorPanel onGenerate={handleAIGenerate} />
+
       {/* Full Description */}
       <div>
         <label
@@ -267,7 +292,6 @@ export default function AddGearForm() {
         >
           Full Description <span className="text-red-500">*</span>
         </label>
-        {/* AI Content Generator will attach here */}
         <textarea
           id="fullDescription"
           value={fullDescription}
@@ -283,6 +307,59 @@ export default function AddGearForm() {
             {errors.fullDescription}
           </p>
         )}
+      </div>
+
+      {/* Tags */}
+      <div>
+        <label className="mb-1.5 block text-sm font-medium text-foreground">
+          Tags
+        </label>
+        <p className="mb-2 text-xs text-muted">
+          AI-suggested tags appear here after generation. Add your own too.
+        </p>
+        {tags.length > 0 && (
+          <div className="mb-2 flex flex-wrap gap-2">
+            {tags.map((tag) => (
+              <span
+                key={tag}
+                className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary"
+              >
+                {tag}
+                <button
+                  type="button"
+                  onClick={() => handleRemoveTag(tag)}
+                  className="text-primary/70 hover:text-primary"
+                  aria-label={`Remove tag ${tag}`}
+                >
+                  &times;
+                </button>
+              </span>
+            ))}
+          </div>
+        )}
+        <div className="flex gap-2">
+          <input
+            type="text"
+            value={tagInput}
+            onChange={(e) => setTagInput(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                handleAddTag();
+              }
+            }}
+            placeholder="Add a tag…"
+            className="flex-1 rounded-lg border border-border bg-card px-3 py-2 text-sm text-foreground placeholder:text-muted focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+          />
+          <button
+            type="button"
+            onClick={handleAddTag}
+            disabled={!tagInput.trim()}
+            className="rounded-lg border border-border bg-card px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-surface disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            Add
+          </button>
+        </div>
       </div>
 
       {/* Category + Condition row */}
