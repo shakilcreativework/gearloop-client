@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
 import { signOut } from "@/lib/auth-client";
+import ThemeToggle from "@/components/theme/ThemeToggle";
 
 const PUBLIC_LINKS = [
   { href: "/", label: "Home" },
@@ -50,6 +51,7 @@ export default function Navbar() {
 
         {/* Desktop right side */}
         <div className="hidden items-center gap-3 md:flex">
+          <ThemeToggle />
           {isPending ? (
             <div className="h-8 w-8 animate-pulse rounded-full bg-border" />
           ) : user ? (
@@ -135,6 +137,9 @@ export default function Navbar() {
             ))}
           </ul>
 
+          <div className="mt-3 flex items-center gap-2 border-t border-border pt-3">
+            <ThemeToggle />
+          </div>
           <div className="mt-3 flex flex-col gap-2 border-t border-border pt-3">
             {isPending ? (
               <div className="h-9 w-full animate-pulse rounded-lg bg-border" />
