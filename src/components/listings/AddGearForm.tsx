@@ -134,7 +134,6 @@ export default function AddGearForm() {
 
       await createListing(
         {
-          ownerId: user.id,
           title: title.trim(),
           shortDescription: shortDescription.trim(),
           fullDescription: fullDescription.trim(),

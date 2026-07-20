@@ -126,7 +126,7 @@ export async function getOwnerListings(ownerId: string): Promise<ListingDoc[]> {
 }
 
 export async function createListing(
-  data: Omit<ListingDoc, "_id" | "createdAt" | "updatedAt" | "rating" | "reviewCount">,
+  data: Omit<ListingDoc, "_id" | "ownerId" | "createdAt" | "updatedAt" | "rating" | "reviewCount">,
   token: string,
 ): Promise<ListingDoc> {
   return request<ListingDoc>("/api/listings", {
